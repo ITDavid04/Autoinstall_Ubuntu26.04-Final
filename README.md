@@ -31,6 +31,7 @@ Nach der Installation startet der Benutzer `david` das erste Mal den Rechner, ö
 Die Installation läuft in **drei Phasen**:
 
 ### Phase 1 – Autoinstall (`user-data`)
+
 Der Installer richtet automatisch ein:
 
 | Was | Einstellung |
@@ -43,6 +44,7 @@ Der Installer richtet automatisch ein:
 | SSH-Server | Nicht vorinstalliert (wird später nachgeholt) |
 
 **Partitionierung:**
+
 ```
 [EFI]  1 GB   → /boot/efi  (FAT32)
 [BOOT] 1 GB   → /boot       (ext4)
@@ -50,6 +52,7 @@ Der Installer richtet automatisch ein:
 ```
 
 ### Phase 2 – `late-commands` (läuft noch im Installer)
+
 Direkt nach der Installation, bevor der Rechner neu startet:
 
 - 🌍 Sprache und Tastaturlayout werden finalisiert (`de_DE.UTF-8`)
@@ -60,14 +63,17 @@ Direkt nach der Installation, bevor der Rechner neu startet:
 - 💬 Ein Hinweis-Banner wird in `.bashrc` eingetragen
 
 ### Phase 3 – `install-software.sh` (läuft nach dem ersten Login)
+
 Das Skript erkennt automatisch, ob Internet vorhanden ist:
 
 **Ohne Internet (Offline-Modus):**
+
 - Bloatware entfernen (Snap, LibreOffice, Spiele, Firefox-Snap, ...)
 - Auto-Updates deaktivieren
 - Sudo ohne Passwort konfigurieren
 
 **Mit Internet (Online-Modus, zusätzlich):**
+
 - 🔒 Firewall (UFW) aktivieren → Port 2222 (SSH) und 8080 (Web) offen
 - 🔑 SSH-Server installieren, auf Port **2222** konfigurieren
 - 🦊 Firefox (echtes .deb aus Mozilla-PPA, nicht Snap)
@@ -84,6 +90,7 @@ Das Skript erkennt automatisch, ob Internet vorhanden ist:
 ## 🚀 Wie benutze ich das?
 
 ### 1. Repo klonen
+
 ```bash
 git clone https://github.com/Wiki-BlueMarlin/Autoinstall_Ubuntu26.04-Final
 cd Autoinstall_Ubuntu26.04-Final
@@ -112,10 +119,16 @@ Inhalt mit einem Texteditor öffnen und den gesamten String kopieren.
 In `user-data` den folgenden Block suchen (Schritt 6 in den `late-commands`):
 
 ```yaml
-# 6. Postinstall-Skript ablegen (Base64-kodiert)
+# 5. Postinstall-Skript ablegen (Base64-kodiert)
     - |
       curtin in-target -- bash -c 'echo "HIER_DEIN_BASE64_STRING" | base64 -d > /home/david/install-software.sh && chmod +x /home/david/install-software.sh && chown 1000:1000 /home/david/install-software.sh'
-```
+      
+ **Achtung!!! Namen Korregieren im Pfad!!!  /home/davi/install-software.sh &&   --->>> Auf deinen Namen    
+
+# 5. Postinstall-Skript ablegen (Base64-kodiert)
+    # WICHTIG: String neu generieren mit: base64 -w 0 install-software.sh
+    - |
+      curtin in-target -- bash -c 'echo "HIER_DEIN_BASE64_STRING" | base64 -d > /home/max/install-software.sh && chmod +x /home/max/install-software.sh && chown 1000:1000 /home/max/install-software.sh'
 
 `HIER_DEIN_BASE64_STRING` durch den kopierten Inhalt aus `postinstall.b64` ersetzen.  
 ⚠️ Der String muss **innerhalb der Anführungszeichen** stehen – also zwischen `echo "` und `" |`.
@@ -136,10 +149,15 @@ sudo apt install cubic
 ```
 
 **Vorgehen in Cubic:**
+
 1. Ubuntu-ISO öffnen: `ubuntu-26.04.0-2026.05.05-desktop-amd64.iso`
+
 2. Im Reiter **Preseed** die Dateien `user-data` und `meta-data` einfügen
+
 3. Im Reiter **Boot** die `grub.cfg` anpassen (siehe Repo-Datei `grub.cfg`)
+
 4. **Kernel bleibt Standard** – kein `linux-generic` auswählen
+
 5. ISO generieren lassen
 
 ---
@@ -202,8 +220,11 @@ SSH läuft auf **Port 2222** (nicht dem Standard-Port 22):
 ```bash
 # Von einem anderen Rechner verbinden
 ssh -p 2222 xyz@IP-ADRESSE
+
 ```
+
 ## Nur DU Hast ZUgriff mit Passwort / Wenn dir das zu unsicher ist ändere das Vorgehen.
+
 ---
 
 ## 🔩 Technische Details
