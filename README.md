@@ -1,4 +1,5 @@
 # 🖥️ Ubuntu 26.04 Autoinstall – D3001
+Vollautomatisches Ubuntu 26.04 Setup – Standard-ISO, TPM 2.0, LUKS, offline-fähig
 
 > Automatische Erstinstallation von Ubuntu Desktop für den Schulungsrechner **D3001**  
 > Umschulung IT-Systemintegration · Klasse 2026
