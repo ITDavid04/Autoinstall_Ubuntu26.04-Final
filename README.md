@@ -1,7 +1,7 @@
 # 🖥️ Ubuntu 26.04 Autoinstall – D3001
 
 > Automatische Erstinstallation von Ubuntu Desktop für den Schulungsrechner **D3001**  
-> Umschulung IT-Systemintegration · Klasse 2024
+> Umschulung IT-Systemintegration · Klasse 2026
 
 ---
 
